@@ -18,6 +18,14 @@ def create_access_token(subject: str | Any, expires_delta: timedelta) -> str:
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+def decode_access_token(token: str):
+    """
+    decode jwt token
+    :param token:
+    :return:
+    """
+    decoded_jwt = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
+    return decoded_jwt
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
