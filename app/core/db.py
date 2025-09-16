@@ -5,7 +5,10 @@ from typing import Generator
 from app.core.config import settings
 from app.models import User, UserCreate
 
-engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
+# engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
+
+def get_engine():
+    return create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 
 
 # make sure all SQLModel models are imported (app.models) before initializing DB
@@ -13,7 +16,7 @@ engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 # for more details: https://github.com/fastapi/full-stack-fastapi-template/issues/28
 
 def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
+    SQLModel.metadata.create_all(get_engine())
 
 
 def init_db(session: Session) -> None:
@@ -38,6 +41,6 @@ def init_db(session: Session) -> None:
 
 # 依赖函数,方便自动管理session会话
 def get_session() -> Generator[Session, None, None]:
-    with Session(engine) as session:
+    with Session(get_engine()) as session:
         yield session
 

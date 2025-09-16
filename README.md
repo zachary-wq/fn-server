@@ -23,3 +23,13 @@ pytest
 openssl rand -base64 32
 ```
 
+
+
+```bash
+# 初始化
+alembic init alembic
+# 生成版本文件
+alembic revision --autogenerate -m "Create initial tables"
+# 执行迁移命令
+alembic upgrade head
+```

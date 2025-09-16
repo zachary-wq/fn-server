@@ -1,6 +1,8 @@
 import secrets
 import warnings
+import os
 from typing import Annotated, Any, Literal
+from functools import lru_cache
 
 from pydantic import (
     AnyUrl,
@@ -67,7 +69,7 @@ class Settings(BaseSettings):
             password=self.POSTGRES_PASSWORD,
             host=self.POSTGRES_SERVER,
             port=self.POSTGRES_PORT,
-            path=self.POSTGRES_DB,
+            path=self.POSTGRES_DB + "_test" if os.environ["TESTING"] == "True" else "",
         )
 
     SMTP_TLS: bool = True
@@ -117,5 +119,11 @@ class Settings(BaseSettings):
 
         return self
 
+@lru_cache
+def get_settings() -> Settings:
+    """获取全局配置单例"""
+    return Settings()
 
-settings = Settings()  # type: ignore
+
+# 创建全局配置实例
+settings = get_settings()

@@ -1,4 +1,5 @@
-from .base import client
+
+from ..conftest import get_client
 
 class TestAuth:
 
@@ -6,9 +7,10 @@ class TestAuth:
         pass
 
     def test_wrong_password(self):
+        client = get_client()
         response = client.post("/api/v1/auth/login/access-token", data={
             "username": "test@email",
             "password": "test"
         })
-        assert response.status_code == 422
-        assert response.text == "success"
+        assert response.status_code == 400
+        # assert response.text == "success"
