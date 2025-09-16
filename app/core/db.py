@@ -8,6 +8,7 @@ from app.models import User, UserCreate
 # engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 
 def get_engine():
+    print(f"str: {str(settings.SQLALCHEMY_DATABASE_URI)}")
     return create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 
 

@@ -69,7 +69,7 @@ class Settings(BaseSettings):
             password=self.POSTGRES_PASSWORD,
             host=self.POSTGRES_SERVER,
             port=self.POSTGRES_PORT,
-            path=self.POSTGRES_DB + "_test" if os.environ["TESTING"] == "True" else "",
+            path=self.POSTGRES_DB + ("_test" if "TESTING" in os.environ and os.environ["TESTING"] == "True" else ""),
         )
 
     SMTP_TLS: bool = True
